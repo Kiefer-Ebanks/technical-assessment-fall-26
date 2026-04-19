@@ -1,6 +1,12 @@
 "use client";
 
-import { useMemo } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
@@ -51,8 +57,41 @@ export default function McLarenTeamPointsChart({
     [rows],
   );
 
+  const sectionRef = useRef<HTMLElement>(null);
+  /** Mount chart only after section is in view so bars animate in (skipped if reduced motion). */
+  const [revealChart, setRevealChart] = useState(false);
+
+  useLayoutEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setRevealChart(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealChart(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.18, rootMargin: "0px 0px -12% 0px" },
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <Box
+      ref={sectionRef}
       id="graph"
       component="section"
       sx={{
@@ -84,6 +123,19 @@ export default function McLarenTeamPointsChart({
           <Typography color="text.secondary">
             No race data to chart yet.
           </Typography>
+        ) : !revealChart ? (
+          <Paper
+            elevation={1}
+            sx={{
+              height: 400,
+              p: { xs: 1, md: 2 },
+              bgcolor: "rgba(255,255,255,0.95)",
+              border: "1px solid rgba(0,0,0,0.08)",
+              borderRadius: 2,
+              boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+            }}
+            aria-busy="true"
+          />
         ) : (
           <Paper
             elevation={2}
@@ -145,6 +197,9 @@ export default function McLarenTeamPointsChart({
                     fill={papaya}
                     radius={[6, 6, 0, 0]}
                     maxBarSize={48}
+                    isAnimationActive
+                    animationDuration={780}
+                    animationEasing="ease-out"
                   />
                 </BarChart>
               </ResponsiveContainer>
