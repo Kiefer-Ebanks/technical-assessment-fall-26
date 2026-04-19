@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react";
 import type { ApiPayload, ResultRow } from "../types/mclarenResults";
 
+/** Hosted backend url on Render */
+const DEFAULT_API_BASE_URL = "https://mclaren-dashboard-4zhz.onrender.com";
+
 export function useMcLarenResults(season = "2025") {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5001";
+  
+  const baseUrl = DEFAULT_API_BASE_URL;
 
   const [rows, setRows] = useState<ResultRow[]>([]);
   const [meta, setMeta] = useState<{
