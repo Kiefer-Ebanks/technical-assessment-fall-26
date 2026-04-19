@@ -112,9 +112,7 @@ export default function McLarenHero() {
               fontSize: { xs: "1rem", md: "1.125rem" },
             }}
           >
-            A papaya-and-carbon dashboard for McLaren&apos;s season — standings,
-            races, and points over time. Built for one team, one screen, full
-            throttle.
+            A dashboard for McLaren's season performace. See their standings, races, and points over time.
           </Typography>
         </Box>
       </Container>

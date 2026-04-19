@@ -1,11 +1,5 @@
-import McLarenHero from "./components/McLarenHero";
-import McLarenResultsTable from "./components/McLarenResultsTable";
+import McLarenDashboard from "./components/McLarenDashboard";
 
 export default function Home() {
-  return (
-    <>
-      <McLarenHero />
-      <McLarenResultsTable />
-    </>
-  );
+  return <McLarenDashboard />;
 }

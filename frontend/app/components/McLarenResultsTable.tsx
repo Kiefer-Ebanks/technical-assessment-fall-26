@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import type { ResultRow } from "../types/mclarenResults";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -39,28 +40,6 @@ const tableSectionBg = {
   `,
 };
 
-export type ResultRow = {
-  season: string;
-  round: string;
-  raceName: string;
-  raceDate: string;
-  circuitName?: string;
-  country?: string;
-  driverCode: string;
-  givenName?: string;
-  familyName?: string;
-  position: string;
-  points: number;
-  status?: string;
-};
-
-type ApiPayload = {
-  rows: ResultRow[];
-  season: string;
-  rowCount?: number;
-  fromCache?: boolean;
-};
-
 function rowMatchesQuery(row: ResultRow, q: string): boolean {
   if (!q.trim()) return true;
   const needle = q.trim().toLowerCase();
@@ -84,58 +63,23 @@ function rowMatchesQuery(row: ResultRow, q: string): boolean {
   return hay.includes(needle);
 }
 
-export default function McLarenResultsTable() {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5001";
+export type McLarenResultsTableProps = {
+  rows: ResultRow[];
+  meta: { season: string; fromCache?: boolean };
+  loading: boolean;
+  fetchError: string | null;
+  baseUrl: string;
+};
 
-  const [rows, setRows] = useState<ResultRow[]>([]);
-  const [meta, setMeta] = useState<{ season: string; fromCache?: boolean }>({
-    season: "",
-  });
-  const [loading, setLoading] = useState(true);
-  const [fetchError, setFetchError] = useState<string | null>(null);
+export default function McLarenResultsTable({
+  rows,
+  meta,
+  loading,
+  fetchError,
+  baseUrl,
+}: McLarenResultsTableProps) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(0);
-
-  useEffect(() => {
-    let cancelled = false;
-    const season = "2025";
-
-    async function load() {
-      setLoading(true);
-      setFetchError(null);
-      try {
-        const res = await fetch(
-          `${baseUrl.replace(/\/$/, "")}/api/mclaren/results?season=${season}`,
-        );
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-        const data = (await res.json()) as ApiPayload;
-        if (!cancelled) {
-          setRows(Array.isArray(data.rows) ? data.rows : []);
-          setMeta({
-            season: data.season ?? season,
-            fromCache: data.fromCache,
-          });
-        }
-      } catch (e) {
-        if (!cancelled) {
-          setFetchError(
-            e instanceof Error ? e.message : "Could not load race results.",
-          );
-          setRows([]);
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, [baseUrl]);
 
   useEffect(() => { // reset the page to 0 when the search changes
     setPage(0);
