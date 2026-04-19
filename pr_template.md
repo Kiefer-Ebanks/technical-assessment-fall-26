@@ -1,11 +1,11 @@
-# [YOUR FULL NAME]'s Submission
-**Date**: [date here]
+Kiefer Ebanks's Submission
+**Date**: 04/19/26
 
-**Email**: [email here]
+**Email**: kieferebanks@gmail.com
 
-**Class Year**: [year here]
+**Class Year**: 2027
 
-**Favorite F1 Team**: [team here]
+**Favorite F1 Team**: McLaren
 
 ## Core Requirements
 Please check off which features you have implemented:
@@ -25,14 +25,17 @@ Please check off which features you have implemented:
 - [ ] Supports Regex (Regular Expressions) in the search bar.
 - [ ] Includes a custom UI for Boolean search logic (e.g., AND/OR dropdowns or toggles).
 
+## Hosted Project Link
+**Link** https://mclarendashboard.vercel.app/
+
 ## Screen Recording 
-**Link**: [paste it here]
+**Link**: https://youtu.be/DqO8wxN8SyI
 
 ## Written Portion
 1. **How did the project go? What parts of it did you most enjoy / find yourself good at?**
 
-[answer here]
+I enjoyed the project overall. It reminded me of other web apps I've built before, but I still got to touch tools that were new to me. Although it wasn't fully necessary for how I implemented this project, I decided to set up a MongoDB database to act as a cache for the information. I'd never used MongoDB before, but it was interesting learning how it stores information differently than sql databases. I'd never used Recharts either, but getting the chart working wasn't too difficult.
 
 2. **Was this technical assessment what you expected? If you had another two weeks to work on it, what would you add or change?**
 
-[answer here]
+This project was what I expected and, as I mentioned earlier, felt familiar to some web dev project I have done before. However, if I had another two weeks, I'd add the ability to get data for other seasons than just 2025. That would also make the database cache more useful because we'd be storing and reusing more data.
