@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -14,9 +15,57 @@ const MCLAREN_LOGO_SRC = "/MclarenLogo.png?v=2";
 const papaya = "#FF8700";
 const charcoal = "#0d0d0d";
 
+function useHeroLogoShiftX() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [shiftX, setShiftX] = useState(0);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+
+    const maxShiftPx = () =>
+      Math.min(160, Math.max(40, window.innerWidth * 0.14));
+
+    const update = () => {
+      if (reducedMotion.matches) {
+        setShiftX(0);
+        return;
+      }
+      const scrollY = window.scrollY;
+      const rect = el.getBoundingClientRect();
+      const sectionTopDoc = scrollY + rect.top;
+      const span = Math.max(el.offsetHeight * 0.65, 280);
+      const raw =
+        (scrollY - sectionTopDoc + window.innerHeight * 0.12) / span;
+      const progress = Math.min(1, Math.max(0, raw));
+      setShiftX(progress * maxShiftPx());
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    reducedMotion.addEventListener("change", update);
+
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      reducedMotion.removeEventListener("change", update);
+    };
+  }, []);
+
+  return { sectionRef, shiftX };
+}
+
 export default function McLarenHero() {
+  const { sectionRef, shiftX } = useHeroLogoShiftX();
+
   return (
     <Box
+      ref={sectionRef}
       id="home"
       component="section"
       sx={{
@@ -74,6 +123,8 @@ export default function McLarenHero() {
               maxWidth: { xs: "min(100%, 560px)", sm: 680, md: 880, lg: 960 },
               height: { xs: 104, sm: 132, md: 168, lg: 184 },
               mb: { xs: 4, md: 5 },
+              transform: `translateX(${shiftX}px)`,
+              willChange: "transform",
             }}
           >
             <Image
