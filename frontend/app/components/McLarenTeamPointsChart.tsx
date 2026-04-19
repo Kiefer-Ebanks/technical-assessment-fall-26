@@ -52,7 +52,15 @@ export default function McLarenTeamPointsChart({
   );
 
   return (
-    <Box component="section" sx={{ py: { xs: 3, md: 5 }, ...chartSectionBg }}>
+    <Box
+      id="graph"
+      component="section"
+      sx={{
+        scrollMarginTop: "1rem",
+        py: { xs: 3, md: 5 },
+        ...chartSectionBg,
+      }}
+    >
       <Container maxWidth="lg">
         <Typography
           variant="h5"

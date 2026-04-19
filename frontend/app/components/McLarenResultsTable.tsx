@@ -109,8 +109,10 @@ export default function McLarenResultsTable({
 
   return (
     <Box
+      id="table"
       component="section"
       sx={{
+        scrollMarginTop: "1rem",
         py: { xs: 4, md: 6 },
         ...tableSectionBg,
       }}
