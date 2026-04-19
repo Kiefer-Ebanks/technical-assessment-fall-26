@@ -1,8 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+
+/** Must match filename in `public/` (case-sensitive on Linux deploys). Bump `v` after replacing/cropping the file. */
+const MCLAREN_LOGO_SRC = "/MclarenLogo.png?v=2";
 
 /** McLaren-inspired papaya + charcoal — no global ThemeProvider */
 const papaya = "#FF8700";
@@ -37,23 +41,28 @@ export default function McLarenHero() {
           py: { xs: 8, md: 12 },
         }}
       >
-        <Typography
-          component="p"
+        <Box
           sx={{
-            color: "#ffffff",
-            fontWeight: 800,
-            letterSpacing: "-0.045em",
-            fontSize: {
-              xs: "clamp(3.25rem, 12vw, 5rem)",
-              md: "clamp(4.5rem, 11vw, 7.5rem)",
-            },
-            lineHeight: 0.95,
+            position: "relative",
+            width: "100%",
+            maxWidth: { xs: "min(100%, 560px)", sm: 680, md: 880, lg: 960 },
+            height: { xs: 104, sm: 132, md: 168, lg: 184 },
             mb: { xs: 4, md: 5 },
-            maxWidth: "lg",
           }}
         >
-          McLaren
-        </Typography>
+          <Image
+            src={MCLAREN_LOGO_SRC}
+            alt="McLaren"
+            fill
+            priority
+            unoptimized
+            sizes="(max-width: 600px) 560px, (max-width: 960px) 680px, 960px"
+            style={{
+              objectFit: "contain",
+              objectPosition: "left center",
+            }}
+          />
+        </Box>
         <Box
           sx={{
             maxWidth: "md",
@@ -94,7 +103,10 @@ export default function McLarenHero() {
             sx={{
               mt: 2.5,
               color: "rgba(255,255,255,0.72)",
-              fontWeight: 400,
+              fontFamily:
+                "var(--font-rajdhani), ui-sans-serif, system-ui, sans-serif",
+              fontWeight: 500,
+              letterSpacing: "0.02em",
               lineHeight: 1.6,
               maxWidth: "36rem",
               fontSize: { xs: "1rem", md: "1.125rem" },
