@@ -9,15 +9,15 @@ Kiefer Ebanks's Submission
 
 ## Core Requirements
 Please check off which features you have implemented:
-- [ ] Built as a Single Page Application (SPA) without needing browser reloads.
-- [ ] An interesting and beautiful frontend design with a catchy title, apt description, and cool fonts/colors that looks good on any screen size.
-- [ ] Successfully fetches and renders data from an external F1 API (e.g., Ergast, OpenF1).
-- [ ] Displays F1 data in a table that is capped at 20 rows per page.
-- [ ] Table includes functional Next/Previous arrows to navigate the dataset.
-- [ ] Includes a search bar that filters the dataset based on simple text input.
-- [ ] Includes at least one chart or graph (using Chart.js, Recharts, D3, etc.) that visualizes the pulled data.
-- [ ] Features an animated background and smooth transitions/animations for UI elements.
-- [ ] Deployed the application using free deployment tools.
+- [x] Built as a Single Page Application (SPA) without needing browser reloads.
+- [x] An interesting and beautiful frontend design with a catchy title, apt description, and cool fonts/colors that looks good on any screen size.
+- [x] Successfully fetches and renders data from an external F1 API (e.g., Ergast, OpenF1).
+- [x] Displays F1 data in a table that is capped at 20 rows per page.
+- [x] Table includes functional Next/Previous arrows to navigate the dataset.
+- [x] Includes a search bar that filters the dataset based on simple text input.
+- [x] Includes at least one chart or graph (using Chart.js, Recharts, D3, etc.) that visualizes the pulled data.
+- [x] Features an animated background and smooth transitions/animations for UI elements.
+- [x] Deployed the application using free deployment tools.
 
 ## Extra Features (Optional)
 - [ ] Allows the user to change the number of rows displayed at once (e.g., 10, 20, 50).
